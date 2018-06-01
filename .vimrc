@@ -3,15 +3,8 @@ let g:mapleader = ","
 let g:solarized_termcolors=256
 let g:tagbar_autofocus=1
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', '\.class$']
-let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-    \ 'file': '\v\.(exe|so|dll|class|pyc)$',
-    \ 'link': 'some_bad_symbolic_links',
-    \ }
-let g:ctrlp_prompt_mappings = {
-    \ 'AcceptSelection("e")': ['<c-t>'],
-    \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
-    \ }
+let g:NERDSpaceDelims=1
+let g:NERDDefaultAlign = 'left'
 
 set nocompatible
 set splitright
@@ -20,7 +13,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'scrooloose/nerdtree'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'kien/ctrlp.vim'
+Plugin 'junegunn/fzf'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'raimondi/delimitmate'
 Plugin 'majutsushi/tagbar'
@@ -29,9 +22,11 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'mileszs/ack.vim'
 Plugin 'w0rp/ale'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'scrooloose/nerdcommenter'
 call vundle#end()
 
-nnoremap <S-f> :Ack! <C-R><C-W> 
+nnoremap <silent> <C-p> :FZF<CR>
+nnoremap <S-f> :Ack <C-R><C-W> 
 cnoreabbrev Ack Ack!
 
 inoremap jk <ESC>
@@ -55,14 +50,6 @@ nmap s <Plug>(easymotion-s2)
 let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
-
-let g:ale_linters = {
-\   'python': ['autopep8'],
-\}
-
-let g:ale_fixers = {
-\   'python': ['autopep8'],
-\}
 
 let g:ale_fix_on_save = 1
 let g:ale_completion_enabled = 1
@@ -100,7 +87,7 @@ noremap <leader>0 :tablast<cr>
 
 map <leader>v :vsplit<cr>
 
-set clipboard=unnamed
+" set clipboard=unnamed
 
 let g:last_active_tab = 1
 nnoremap <silent> <leader>tt :execute 'tabnext ' . g:last_active_tab<cr>
@@ -206,3 +193,24 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 if executable('ag')
     let g:ackprg = 'ag --vimgrep --smart-case'
 endif
+
+" auto add python header
+autocmd BufNewFile *.py 0r ~/.vim/vim_template/vim_python_header
+autocmd BufNewFile *.py ks|call FileName()|'s
+autocmd BufNewFile *.py ks|call CreatedTime()|'s
+
+fun FileName()
+    let l = line("$")
+    if l > 10
+        let l = 10
+    endif
+    exe "1, " . l . "g/File Name:.*/s/File Name:.*/File Name: " .expand("%")
+endfun
+
+fun CreatedTime()
+    let l = line("$")
+    if l > 10
+        let l = 10
+    endif
+    exe "1, " . l . "g/Created Time:.*/s/Created Time:.*/Created Time: " .strftime("%Y-%m-%d %T")
+endfun
