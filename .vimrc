@@ -191,7 +191,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 if executable('ag')
-    let g:ackprg = 'ag --vimgrep --smart-case'
+    let g:ackprg = 'ag --java --xml --cc --hh --python --js --css --vimgrep --smart-case'
 endif
 
 " auto add python header
