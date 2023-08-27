@@ -5,31 +5,37 @@ let g:tagbar_autofocus=1
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', '\.class$']
 let g:NERDSpaceDelims=1
 let g:NERDDefaultAlign = 'left'
+let g:rainbow_active = 1
 
 set nocompatible
 set splitright
+set splitbelow
 filetype on
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'scrooloose/nerdtree'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'ghifarit53/tokyonight-vim'
 Plugin 'raimondi/delimitmate'
+Plugin 'frazrepo/vim-rainbow'
 Plugin 'majutsushi/tagbar'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'mileszs/ack.vim'
+Plugin 'itchyny/lightline.vim'
 Plugin 'w0rp/ale'
-Plugin 'davidhalter/jedi-vim'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'valloric/youcompleteme'
 call vundle#end()
 
-nnoremap <silent> <C-p> :FZF<CR>
-nnoremap <S-f> :Ack <C-R><C-W> 
-cnoreabbrev Ack Ack!
+nnoremap <c-p> :Files<CR>
+nnoremap <c-g> :Rg<CR>
 
 inoremap jk <ESC>
+inoremap jK <ESC>
+inoremap JK <ESC>
+inoremap <c-j> <c-n>
+inoremap <c-k> <c-p>
 nnoremap <space> za
 nnoremap j gj
 nnoremap k gk
@@ -51,28 +57,12 @@ let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
-let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
-let g:ale_sign_column_always = 1
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:airline#extensions#ale#enabled = 1
-
-" tab
 nmap <Leader>t :TagbarToggle<CR>
-map <leader>th :tabfirst<cr>
-map <leader>tl :tablast<cr>
+
 map <leader>tj :tabnext<cr>
 map <leader>tk :tabprev<cr>
 map <leader>tn :tabnext<cr>
 map <leader>tp :tabprev<cr>
-map <leader>te :tabedit<cr>
-map <leader>td :tabclose<cr>
-map <leader>tm :tabm<cr>
 
 noremap <leader>1 1gt
 noremap <leader>2 2gt
@@ -92,15 +82,14 @@ map <leader>v :vsplit<cr>
 let g:last_active_tab = 1
 nnoremap <silent> <leader>tt :execute 'tabnext ' . g:last_active_tab<cr>
 autocmd TabLeave * let g:last_active_tab = tabpagenr()
-nnoremap <C-t>     :tabnew<CR>
-inoremap <C-t>     <Esc>:tabnew<CR>
+nnoremap <C-t> :tabnew<CR>
+inoremap <C-t> <Esc>:tabnew<CR>
 
 filetype plugin indent on
-runtime macros/matchit.vim
 
 let python_highlight_all=1
 syntax on
-set ffs=mac,dos,unix
+set ffs=unix,mac,dos
 set number
 set history=500
 set autoread 
@@ -118,7 +107,6 @@ set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
  
 set ignorecase
-
 set smartcase
 
 set hlsearch
@@ -150,7 +138,11 @@ catch
 endtry
 
 set background=dark
-colorscheme solarized
+" colorscheme solarized
+
+let g:tokyonight_style = 'night' " available: night, storm
+let g:tokyonight_enable_italic = 1
+colorscheme tokyonight
 
 set nobackup
 set nowb 
@@ -171,46 +163,24 @@ set wrap
 
 set completeopt=longest,menu
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%{ALEGetStatusLine()}
-set statusline+=%*
+set laststatus=2
+let g:lightline = { 'colorscheme': 'powerline' }
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:rainbow_active = 1
+let g:rainbow_load_separately = [
+    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
+    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
+    \ ]
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
+let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
+
+let g:ycm_global_ycm_extra_conf='~/.vim/bundle/youcompleteme/third_party/ycmd/.ycm_extra_conf.py'
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-if executable('ag')
-    let g:ackprg = 'ag --java --xml --cc --hh --python --js --css --vimgrep --smart-case'
-endif
 
-" auto add python header
-autocmd BufNewFile *.py 0r ~/.vim/vim_template/vim_python_header
-autocmd BufNewFile *.py ks|call FileName()|'s
-autocmd BufNewFile *.py ks|call CreatedTime()|'s
-
-fun FileName()
-    let l = line("$")
-    if l > 10
-        let l = 10
-    endif
-    exe "1, " . l . "g/File Name:.*/s/File Name:.*/File Name: " .expand("%")
-endfun
-
-fun CreatedTime()
-    let l = line("$")
-    if l > 10
-        let l = 10
-    endif
-    exe "1, " . l . "g/Created Time:.*/s/Created Time:.*/Created Time: " .strftime("%Y-%m-%d %T")
-endfun
