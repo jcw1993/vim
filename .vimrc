@@ -1,6 +1,5 @@
 let mapleader = ","
 let g:mapleader = ","
-let g:solarized_termcolors=256
 let g:tagbar_autofocus=1
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$', '\.class$']
 let g:NERDSpaceDelims=1
@@ -10,14 +9,12 @@ let g:rainbow_active = 1
 set nocompatible
 set splitright
 set splitbelow
-filetype on
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'scrooloose/nerdtree'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'ghifarit53/tokyonight-vim'
 Plugin 'raimondi/delimitmate'
 Plugin 'frazrepo/vim-rainbow'
@@ -26,6 +23,7 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'w0rp/ale'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'valloric/youcompleteme'
+Plugin 'udalov/kotlin-vim'
 call vundle#end()
 
 nnoremap <c-p> :Files<CR>
