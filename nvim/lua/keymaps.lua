@@ -52,6 +52,7 @@ vim.keymap.set('n', '<leader>v', ':vsplit<CR>', opts)
 vim.keymap.set('n', 's', '<Plug>(easymotion-s2)', opts)
 vim.keymap.set('n', '<leader>j', '<Plug>(easymotion-j)', opts)
 vim.keymap.set('n', '<leader>k', '<Plug>(easymotion-k)', opts)
+vim.keymap.set('n', '<leader>t', ':SymbolsOutline<CR>', opts)
 -----------------
 -- Visual mode --
 -----------------
