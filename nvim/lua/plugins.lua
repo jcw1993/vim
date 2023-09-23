@@ -108,7 +108,7 @@ local mason = {
     config = function()
         require("mason").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = { 'pyright', 'lua_ls', 'rust_analyzer' },
+            ensure_installed = { 'pyright', 'lua_ls', 'rust_analyzer', 'clangd' },
         })
     end
 }
