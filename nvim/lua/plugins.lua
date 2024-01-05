@@ -16,7 +16,8 @@ local nvim_tree = {
     version = "*",
     dependencies = {"nvim-tree/nvim-web-devicons"},
     config = function()
-        require("nvim-tree").setup {}
+        require("nvim-tree").setup {
+        }
     end
 }
 
@@ -57,7 +58,7 @@ local treesitter = {
     dependencies = {"p00f/nvim-ts-rainbow"},
     config = function()
         require('nvim-treesitter.configs').setup({
-            ensure_installed = { "c", "lua", "vim", "vimdoc", "query" },
+            ensure_installed = { "c", "lua", "python", "java", "kotlin", "vim", "vimdoc", "query" },
             sync_install = false,
             auto_install = true,
             highlight = {
@@ -108,7 +109,7 @@ local mason = {
     config = function()
         require("mason").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = { 'pyright', 'lua_ls', 'rust_analyzer', 'clangd' },
+            ensure_installed = { 'pyright', 'lua_ls', 'rust_analyzer', 'clangd', 'jdtls', 'kotlin_language_server' },
         })
     end
 }

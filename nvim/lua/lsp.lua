@@ -12,3 +12,23 @@ lspconfig.rust_analyzer.setup {
 lspconfig.clangd.setup {
     capabilities = capabilities
 }
+lspconfig.jdtls.setup {
+    capabilities = capabilities,
+    --handlers = {
+        --["$/progress"] = vim.schedule_wrap(on_language_status),
+    --},
+}
+lspconfig.kotlin_language_server.setup {
+    capabilities = capabilities
+}
+
+local function on_language_status(_, result)
+  -- Ignore nil messages.
+  if result.message == nil then
+      return
+  end
+  local command = vim.api.nvim_command
+  command 'echohl ModeMsg'
+  command(string.format('echo "%s"', result.message))
+  command 'echohl None'
+end

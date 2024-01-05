@@ -46,6 +46,12 @@ vim.keymap.set('n', '<leader>8', '8gt', opts)
 vim.keymap.set('n', '<leader>9', '9gt', opts)
 vim.keymap.set('n', '<leader>0', ':tablast<CR>', opts)
 vim.keymap.set('n', '<C-t>', ':tabnew<CR>', opts)
+vim.keymap.set('n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', opt)
+vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opt)
+vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opt)
+vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opt)
+vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opt)
+vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opt)
 
 vim.keymap.set('n', '<leader>v', ':vsplit<CR>', opts)
 
