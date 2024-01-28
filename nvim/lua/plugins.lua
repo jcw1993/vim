@@ -43,6 +43,10 @@ local fzf = {
     build = "./install --bin"
 }
 
+local fzfvim = {
+    "junegunn/fzf.vim", 
+}
+
 local telescope = {
     "nvim-telescope/telescope.nvim",
     version = "*",
@@ -184,6 +188,6 @@ local nvim_cmp = {
 }
 
 
-local bundle = { nvim_tree, colorscheme, lualine, fzf, telescope, treesitter, easymotion, delimitmate, commenter, outline, mason, nvim_cmp }
+local bundle = { nvim_tree, colorscheme, lualine, fzf, fzfvim, telescope, treesitter, easymotion, delimitmate, commenter, outline, mason, nvim_cmp }
 
 require("lazy").setup(bundle)
