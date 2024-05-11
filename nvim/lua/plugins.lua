@@ -113,9 +113,13 @@ local mason = {
     config = function()
         require("mason").setup()
         require("mason-lspconfig").setup({
-            ensure_installed = { 'pyright', 'lua_ls', 'rust_analyzer', 'clangd', 'jdtls', 'kotlin_language_server' },
+            ensure_installed = { 'pyright', 'gopls', 'lua_ls', 'rust_analyzer', 'clangd', 'jdtls', 'kotlin_language_server' },
         })
     end
+}
+
+local copilot = {
+    "github/copilot.vim"
 }
 
 local nvim_cmp = {
@@ -188,6 +192,6 @@ local nvim_cmp = {
 }
 
 
-local bundle = { nvim_tree, colorscheme, lualine, fzf, fzfvim, telescope, treesitter, easymotion, delimitmate, commenter, outline, mason, nvim_cmp }
+local bundle = { nvim_tree, colorscheme, lualine, fzf, fzfvim, telescope, treesitter, easymotion, delimitmate, commenter, outline, mason, nvim_cmp, copilot }
 
 require("lazy").setup(bundle)
