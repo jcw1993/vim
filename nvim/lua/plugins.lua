@@ -38,51 +38,57 @@ local lualine = {
     end
 }
 
-local fzf = {
-    "junegunn/fzf", 
-    build = "./install --bin"
-}
+--local fzf = {
+    --"junegunn/fzf",
+    --build = "./install --bin"
+--}
 
-local fzfvim = {
-    "junegunn/fzf.vim", 
-}
+--local fzfvim = {
+    --"junegunn/fzf.vim",
+--}
+
+--local fzf_lsp = {
+    --"ojroques/nvim-lspfuzzy",
+    --config = function()
+        --require('lspfuzzy').setup {}
+    --end
+--}
 
 local telescope = {
     "nvim-telescope/telescope.nvim",
     version = "*",
     dependencies = {"nvim-lua/plenary.nvim"},
     config = function()
-        require('telescope').setup()
+        require('telescope').setup({
+          defaults = {
+            mappings = {
+              i = { -- 插入模式
+                ["<C-j>"] = require('telescope.actions').move_selection_next, -- 下移
+                ["<C-k>"] = require('telescope.actions').move_selection_previous, -- 上移
+                ["<C-l>"] = require('telescope.actions').close,
+              },
+              n = { -- 正常模式
+                ["<C-j>"] = require('telescope.actions').move_selection_next, -- 下移
+                ["<C-k>"] = require('telescope.actions').move_selection_previous, -- 上移
+                ["<C-l>"] = require('telescope.actions').close,
+              },
+            },
+          },
+        })
     end
 }
 
-local treesitter = {
-    "nvim-treesitter/nvim-treesitter",
-    version = "*",
-    dependencies = {"p00f/nvim-ts-rainbow"},
-    config = function()
-        require('nvim-treesitter.configs').setup({
-            ensure_installed = { "c", "lua", "python", "java", "kotlin", "vim", "vimdoc", "query" },
-            sync_install = false,
-            auto_install = true,
-            highlight = {
-                enable = true,
-                disable = function(lang, buf)
-                    local max_filesize = 100 * 1024
-                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                    if ok and stats and stats.size > max_filesize then
-                        return true
-                    end
-                end,
-                additional_vim_regex_highlighting = false,
-            },
-            rainbow = {
-                enable = true,
-                extended_mode = true,
-                max_file_lines = nil,
-            },
-        })
-    end
+local barbecue = {
+  "utilyre/barbecue.nvim",
+  name = "barbecue",
+  version = "*",
+  dependencies = {
+    "SmiteshP/nvim-navic",
+    "nvim-tree/nvim-web-devicons", -- optional dependency
+  },
+  opts = {
+    -- configurations go here
+  },
 }
 
 local easymotion = {
@@ -99,7 +105,7 @@ local commenter = {
 
 local outline = {
     'simrat39/symbols-outline.nvim',
-    config = function() 
+    config = function()
         require('symbols-outline').setup()
     end
 }
@@ -188,10 +194,25 @@ local nvim_cmp = {
                 { name = "cmdline" },
             }),
         })
-    end 
+    end
+}
+
+local flutter = {
+    'nvim-flutter/flutter-tools.nvim',
+    lazy = false,
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+        'stevearc/dressing.nvim', -- optional for vim.ui.select
+    },
+    config = function()
+        require("flutter-tools").setup {
+            fvm = true,
+        }
+    end
 }
 
 
-local bundle = { nvim_tree, colorscheme, lualine, fzf, fzfvim, telescope, treesitter, easymotion, delimitmate, commenter, outline, mason, nvim_cmp, copilot }
+--local bundle = { nvim_tree, colorscheme, barbecue, lualine, fzf, fzfvim, telescope, easymotion, delimitmate, commenter, outline, mason, nvim_cmp, flutter, copilot, fzf_lsp }
+local bundle = { nvim_tree, colorscheme, barbecue, lualine, telescope, easymotion, delimitmate, commenter, outline, mason, nvim_cmp, flutter, copilot }
 
 require("lazy").setup(bundle)
