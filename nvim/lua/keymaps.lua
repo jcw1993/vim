@@ -20,7 +20,7 @@ vim.keymap.set('i', 'JK', '<ESC>')
 -- default leader key: \
 vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>', opts)
 vim.keymap.set('n', '<leader>f', ':NvimTreeFindFile<CR>', opts)
-vim.keymap.set('n', '<C-;>', ':FlutterOutlineToggle<CR>', opts)
+vim.keymap.set('n', '<leader>o', ':FlutterOutlineToggle<CR>', opts)
 
 -- Hint: see `:h vim.map.set()`
 vim.keymap.set('n', '<C-h>', '<C-w>h', opts)
@@ -48,12 +48,13 @@ vim.keymap.set('n', '<leader>8', '8gt', opts)
 vim.keymap.set('n', '<leader>9', '9gt', opts)
 vim.keymap.set('n', '<leader>0', ':tablast<CR>', opts)
 vim.keymap.set('n', '<C-t>', ':tabnew<CR>', opts)
-vim.keymap.set('n', '<leader>h', '<cmd>lua vim.lsp.buf.hover()<CR>', opt)
+vim.keymap.set('n', '<leader>h', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 --vim.keymap.set('n', '<leader>ld', '<cmd>lua vim.lsp.buf.definition()<CR>', opt)
 --vim.keymap.set('n', '<leader>lD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opt)
 --vim.keymap.set('n', '<leader>r', '<cmd>lua vim.lsp.buf.references()<CR>', opt)
-vim.keymap.set('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opt)
-vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opt)
+vim.keymap.set('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+vim.keymap.set('n', '<space>oi', "<cmd>lua vim.lsp.buf.code_action({ apply = true, context = { only = { 'source.organizeImports' } } })<CR>", opts)
 
 vim.keymap.set('n', '<leader>v', ':vsplit<CR>', opts)
 
@@ -66,7 +67,8 @@ local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<C-g>', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>r', builtin.lsp_references, { desc = 'Telescope list references' })
---vim.keymap.set('n', '<leader>r', builtin.lsp_reference, opts)
+vim.keymap.set('n', '<S-p>', ':Telescope commands<CR>')
+vim.keymap.set('n', '<S-f>', ':lua vim.lsp.buf.format()<CR>')
 
 -----------------
 -- Visual mode --
